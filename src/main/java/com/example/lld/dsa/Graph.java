@@ -7,9 +7,32 @@ import java.util.stream.Collectors;
 
 public class Graph {
     public static void main(String[] args) {
-        String[] grid = {"ab" , "bc", "cd", "da"};
+        String[] grid = {
+                         "cdc", "cgc", "csc"};
         System.out.println(new Graph().isCircle(grid));
     }
+
+    static int[] dijkstra(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj, int S) {
+        // Write your code here
+        int[] dist = new int[V];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[S] = 0;
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(S);
+        while (!queue.isEmpty()) {
+            int u = queue.poll();
+            for (ArrayList<Integer> edge : adj.get(u)) {
+                int v = edge.get(0);
+                int w = edge.get(1);
+                if (dist[u] + w < dist[v]) {
+                    dist[v] = dist[u] + w;
+                    queue.add(v);
+                }
+            }
+        }
+        return dist;
+    }
+
     public int isCircle(String[] arr) {
         Map<Character, List<String>> characterStringHashMap = new HashMap<>();
         for (String s : arr) {
@@ -21,27 +44,28 @@ public class Graph {
         Map<String, List<String>> graph = new HashMap<>();
         for (String s : arr) {
             Character end = s.charAt(s.length() - 1);
+            characterStringHashMap.get(end).remove(s);
             graph.put(s, characterStringHashMap.get(end));
         }
-        Map<String, Boolean> visited = Arrays.stream(arr).collect(Collectors.toMap(s -> s, s -> false, (a, b) -> b));
-        return isCircleDfs(graph, visited, arr[0], arr[0]);
+        Map<String, Boolean> visited = new HashMap<>();
+        for (String s : arr) {
+            visited.put(s, false);
+        }
+        isCircleDfs(graph, visited, arr[0], arr[0]);
+        return visited.containsValue(false) ? 0 : 1;
     }
 
-    private int isCircleDfs(Map<String, List<String>> graph, Map<String, Boolean> visited, String s, String s1) {
+    private void isCircleDfs(Map<String, List<String>> graph, Map<String, Boolean> visited, String s, String s1) {
         if (s.equals(s1) && visited.get(s)) {
-            return 1;
+            return;
         }
-        if (visited.get(s)) {
-            return 0;
+        if (visited.get(s) || graph.get(s) == null) {
+            return;
         }
         visited.put(s, true);
         for (String next : graph.get(s)) {
-            if (isCircleDfs(graph, visited, next, s1) == 1) {
-                return 1;
-            }
+            isCircleDfs(graph, visited, next, s1);
         }
-        visited.put(s, false);
-        return 0;
     }
 
     //Function to find whether a path exists from the source to destination.
@@ -53,11 +77,11 @@ public class Graph {
             Arrays.fill(dist[i], Integer.MAX_VALUE);
         }
         dist[0][0] = grid[0][0];
-        Queue<Pair<Integer,Integer>> queue = new LinkedList<>();
-        Pair<Integer,Integer> start = new Pair<>(0, 0);
+        Queue<Pair<Integer, Integer>> queue = new LinkedList<>();
+        Pair<Integer, Integer> start = new Pair<>(0, 0);
         queue.add(start);
         while (!queue.isEmpty()) {
-            Pair<Integer,Integer> u = queue.poll();
+            Pair<Integer, Integer> u = queue.poll();
             int i = u.getFirst();
             int j = u.getSecond();
             if (i - 1 >= 0 && dist[i - 1][j] > dist[i][j] + grid[i - 1][j]) {
@@ -77,7 +101,7 @@ public class Graph {
                 queue.add(new Pair<>(i, j + 1));
             }
         }
-        return dist[n-1][m-1];
+        return dist[n - 1][m - 1];
     }
 
     private boolean bfs(int[][] grid, Pair<Integer, Integer> start, boolean[][] visited, int n, int m) {
@@ -115,7 +139,7 @@ public class Graph {
         // code here
         int[][] dist = new int[N][M];
         for (int i = 0; i < N; i++) {
-            Arrays.fill(dist[i], N*M);
+            Arrays.fill(dist[i], N * M);
         }
         dist[0][0] = 0;
         Queue<int[]> queue = new LinkedList<>();
@@ -187,27 +211,6 @@ public class Graph {
             }
         }
         s.push(i);
-    }
-
-    static int[] dijkstra(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj, int S) {
-        // Write your code here
-        int[] dist = new int[V];
-        Arrays.fill(dist, Integer.MAX_VALUE);
-        dist[S] = 0;
-        Queue<Integer> queue = new LinkedList<>();
-        queue.add(S);
-        while (!queue.isEmpty()) {
-            int u = queue.poll();
-            for (ArrayList<Integer> edge : adj.get(u)) {
-                int v = edge.get(0);
-                int w = edge.get(1);
-                if (dist[u] + w < dist[v]) {
-                    dist[v] = dist[u] + w;
-                    queue.add(v);
-                }
-            }
-        }
-        return dist;
     }
 
     public int numIslands(char[][] grid) {
