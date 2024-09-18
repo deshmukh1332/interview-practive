@@ -37,7 +37,7 @@ public class Hotel {
             Room room = roomMap.get(roomNumber);
             room.bookRoom(user, date, date1);
 
-            Booking booking = new Booking(user, room, room.price, PaymentMethod.CARD, 1);
+            Booking booking = new Booking(user, Collections.singletonList(room), room.price, PaymentMethod.CARD, 1);
             String bookingId = UUID.randomUUID().toString();
             bookingList.put(bookingId, booking);
             System.out.println(user + " successfully booked room " + roomNumber);
