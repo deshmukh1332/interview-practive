@@ -1,7 +1,7 @@
 package com.example.lld.machine_coding.phonepe;
 
 
-public class AiAnswer {
+public class Answer {
     public static void main(String[] args) {
         BattleShipGame game = new BattleShipGame();
 
