@@ -1,19 +1,17 @@
 package com.example.lld.dsa.interview150;
 
-import javax.swing.tree.TreeNode;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-public class sep15 {
+public class Sept15 {
     public static void main(String[] args) {
         int[] nums = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
         Solution solution = new Solution();
         System.out.println(solution.maxSubArray(nums));
 
         List<Integer> list = new ArrayList<>();
-        System.out.println(list.size());
     }
     public boolean isPalindrome(String s) {
         int l=0;
