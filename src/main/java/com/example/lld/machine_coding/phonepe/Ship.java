@@ -32,8 +32,9 @@ public class Ship {
         return coordinate.contains(new Coordinate(x, y));
     }
 
-    public void destroy() {
+    public void destroy(Set<Coordinate> id) {
         this.destroyed = true;
+
     }
 
     public boolean isDestroyed() {

@@ -1,14 +1,37 @@
 package com.example.lld.machine_coding.phonepe;
 
+
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Player {
 
-    public String name;
-    public ArrayList<Ship> ships;
-    public Set<Coordinate> enemyMissiles;
+    private String name;
+    private ArrayList<Ship> ships;
+    private Set<Coordinate> enemyMissiles;
+    private List<Integer> playersYCoordinatesBoundary;
+
+    public String getName() {
+        return name;
+    }
+
+    public ArrayList<Ship> getShips() {
+        return ships;
+    }
+
+    public Set<Coordinate> getEnemyMissiles() {
+        return enemyMissiles;
+    }
+
+    public List<Integer> getPlayersYCoordinatesBoundary() {
+        return playersYCoordinatesBoundary;
+    }
+
+    public void setPlayersYCoordinatesBoundary(List<Integer> playersYCoordinatesBoundary) {
+        this.playersYCoordinatesBoundary = playersYCoordinatesBoundary;
+    }
 
     public Player(String name) {
         this.name = name;
@@ -34,7 +57,7 @@ public class Player {
         Ship hitShip = battlefield.checkHit(enemy, target.x, target.y);
         if (hitShip != null) {
             System.out.println(name + "'s turn: Missile fired at " + target + ". Hit! " + hitShip.id + " destroyed.");
-            hitShip.destroy();
+            hitShip.destroy(hitShip.coordinate);
         } else {
             System.out.println(name + "'s turn: Missile fired at " + target + ". Miss.");
         }

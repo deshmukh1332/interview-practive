@@ -1,7 +1,5 @@
 package com.example.lld.machine_coding.phonepe;
 
-import java.util.Random;
-
 public class Battlefield {
     public int size;
     public String[][] grid;
@@ -9,8 +7,8 @@ public class Battlefield {
     private CoordinateStrategy coordinateStrategy;
 
     public Battlefield(int size) {
-        this.size = size+1;
-        grid = new String[size + 1][size + 1];
+        this.size = size;
+        grid = new String[size][size];
         initializeGrid();
         this.coordinateStrategy = new RandomCoordinateStrategy(); // Default strategy
     }
@@ -34,7 +32,7 @@ public class Battlefield {
     public void placeShip(Ship ship, Player player) {
         for (Coordinate coord : ship.coordinate) {
             System.out.println("Placing ship " + ship.id + " at " + coord);
-            if (player.name.equals("PlayerA")) {
+            if (player.getName().equals("PlayerA")) {
                 grid[coord.x][coord.y] = "A-" + ship.id;
             } else {
                 grid[coord.x][coord.y] = "B-" + ship.id;
@@ -43,7 +41,7 @@ public class Battlefield {
     }
 
     public Ship checkHit(Player player, int x, int y) {
-        return player.ships.stream().filter(ship -> ship.isHit(x, y)).findFirst().orElse(null);
+        return player.getShips().stream().filter(ship -> ship.isHit(x, y)).findFirst().orElse(null);
     }
 
     public void display() {

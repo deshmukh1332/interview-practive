@@ -1,5 +1,9 @@
 package com.example.lld.machine_coding.phonepe;
 
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class BattleShipGame {
     public Player playerA;
     public Player playerB;
@@ -12,6 +16,8 @@ public class BattleShipGame {
 
     public void initGame(int size) {
         battlefield = new Battlefield(size);
+        playerA.setPlayersYCoordinatesBoundary(Arrays.asList(0, ((size) / 2) - 1));
+        playerB.setPlayersYCoordinatesBoundary(Arrays.asList(((size) / 2), size-1));
         System.out.println("Initialized battlefield of size " + size + "x" + size);
     }
 
@@ -33,14 +39,20 @@ public class BattleShipGame {
 
     public void startGame() {
         Player currentPlayer = playerA;
+        Ship hit = null;
         while (!playerA.isDefeated() && !playerB.isDefeated()) {
             if (currentPlayer == playerA) {
-                Ship hit = playerA.fireMissile(playerB, battlefield);
+                hit = playerA.fireMissile(playerB, battlefield);
                 currentPlayer = (hit == null) ? playerB : playerA;
             } else {
-                Ship hit = playerB.fireMissile(playerA, battlefield);
+                hit = playerB.fireMissile(playerA, battlefield);
                 currentPlayer = (hit == null) ? playerA : playerB;
             }
+        }
+        System.out.println("hit.coordinate " + hit.coordinate);
+        if (hit != null) {
+            hit.coordinate.forEach(coord -> battlefield.grid[coord.x][coord.y] = "D");
+            System.out.println("Battlefield Layout:");
         }
         if (playerA.isDefeated()) {
             System.out.println("GameOver. PlayerB wins.");
