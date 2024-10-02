@@ -33,7 +33,7 @@ public class WeightCapacity {
         int countOfDays = 0;
         int currentWeightInDay = 0;
         for (int weight : weights) {
-            if (currentWeightInDay + weight >= currentLeastCapacity) {
+            if (currentWeightInDay + weight > currentLeastCapacity) {
                 currentWeightInDay = 0;
                 countOfDays++;
             }
