@@ -10,7 +10,7 @@ public class ProcessUtils {
     }
 
 
-    public ProductStatus checkStatus(ProductDto product) {
-
-    }
+//    public ProductStatus checkStatus(ProductDto product) {
+//
+//    }
 }
